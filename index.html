@@ -18,9 +18,10 @@
     <div class="container">
       <div class="date-box">
         <div class="date-time">
-          <span>Thursday, 10th</span>
-          <span>December</span>
+          <span class="days">Thursday, 10th</span>
+          <span class="month">December</span>
         </div>
+
         <div class="total-tasks-box">
           <span class="total-tasks">12</span>
            Tasks
@@ -41,45 +42,28 @@
           </svg>
         </div>
       </div>
-
+      <!-- Update And Store List -->
       <div class="todo-lists">
 
-        <div class="list-item">
-
+        <!-- <div class="list-item">
           <label class="check-item">
             <input type="checkbox">
-            <span>Running Morning</span>
+            <span class="delete-text">Running Morning</span>
             <span class="checkmark"></span>
           </label>
           <div class="list-time">07 : 00 AM</div>
+        </div> -->
 
-        </div>
-        <div class="list-item">
-
-          <label class="check-item">
-            <input type="checkbox">
-            <span>Running Morning</span>
-            <span class="checkmark"></span>
-          </label>
-          <div class="list-time">07 : 00 AM</div>
-
-        </div>
-        <div class="list-item">
-
-          <label class="check-item">
-            <input type="checkbox">
-            <span>Running Morning</span>
-            <span class="checkmark"></span>
-          </label>
-          <div class="list-time">07 : 00 AM</div>
-
-        </div>
-
+        
+        
       </div>
 
+      <div class="clear-all animate__animated">
+        <button>Clear Lists</button>
+      </div>
      
       <div class="text-box animate__animated animate__flipInX">
-        <textarea autofocus name="" id="" rows="5"></textarea>
+        <textarea autofocus name="" id="list-textarea" rows="5"></textarea>
         <div class="btn-list">
           <button id="cancel-btn">Cancel</button>
           <button id="add-list-btn">Add</button>
@@ -87,6 +71,8 @@
       </div>
       
     </div>
+
+
 
     <script src="./js/app.js"></script>
   </body>

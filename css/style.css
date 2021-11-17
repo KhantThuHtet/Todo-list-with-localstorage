@@ -13,7 +13,7 @@ body {
 .background {
   width: 100%;
   background-color: #585ce1;
-  height: 100vh;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -23,7 +23,7 @@ body {
 .background::after {
   content: "";
   background-color: #fc7475;
-  height: 100vh;
+  height: 100%;
   clip-path: polygon(0 20%, 100% 77%, 100% 100%, 0 100%);
   position: absolute;
   top: 0;
@@ -180,8 +180,8 @@ body {
   left: 0;
   height: 18px;
   width: 18px;
-  border-radius: 4px;
-  border: 1px solid black;
+  border-radius: 6px;
+  border: 1px solid #fc7475;
 }
 .check-item input:checked ~ .checkmark {
   background-color: #fc7475;
@@ -222,7 +222,6 @@ body {
   display: flex;
   flex-flow: column;
   justify-content: center;
-  align-items: flex-end;
   padding: 20px;
   z-index: 10;
   align-self: center;
@@ -231,6 +230,10 @@ body {
   display: none;
 }
 
+.delete-text{
+  text-decoration: line-through;
+  text-decoration-color: #474981;
+}
 
 .text-box textarea{
   width: 100% !important;
@@ -246,6 +249,11 @@ body {
   outline: none;
 }
 
+.btn-list{
+  display: flex;
+  justify-content: flex-end;
+}
+
 #add-list-btn{
   width: 80px;
   height: 35px;
@@ -256,6 +264,7 @@ body {
   color: #fff;
   transition: all 0.4s;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 #add-list-btn:hover{
@@ -277,8 +286,28 @@ body {
   background-color: #fc7475;
 }
 
+.clear-all{
+  margin: 10px 43px 10px 0;
+  align-self: flex-end;
+  transition: all 1s;
+  display: none;
+  opacity: 0;
+}
 
+.clear-all button{
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #fa7e7e;
+  background: none;
+  color: hsl(24, 68%, 46%);
+  transition: all 0.3s;
+}
 
+.clear-all button:hover{
+  background-color: #fa7e7e;
+  color: hsl(0, 0%, 100%);
+
+}
 
 
 
