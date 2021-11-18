@@ -10,33 +10,55 @@ showDateTime();
 
 let totalTasksTag = document.getElementsByClassName("total-tasks")[0];
 let totalListTag = document.getElementsByClassName("todo-lists")[0];
-showTotalTasks();
+
+window.addEventListener('load', showTotalTasks);
+
 let clearAllTag = document.querySelector(".clear-all");
 
 let todoListsContainer = document.getElementsByClassName('todo-lists')[0];
 
 let dataFromLocalJson = localStorage.getItem('todos');
 let dataFromLocal = JSON.parse(dataFromLocalJson);
-console.log(dataFromLocal);
+
+
 if (dataFromLocal) {
   dataFromLocal.forEach(data=>{
     todoListsContainer.innerHTML += `
     <div class="list-item">
-      <label class="check-item">
-        <input type="checkbox">
+      <label class="check-item ${data.isDone ? "doneTask" : ""}">
+        <input type="checkbox" ${data.isDone ? "checked" : ""}>
         <span class='input-text'>${data.text}</span>
         <span class="checkmark"></span>
       </label>
       <div class="list-time">${data.hour} : ${data.minute} ${data.amPm}</div>
     </div>
   `;
+    
+  
+
+  let inputTags = document.querySelectorAll('input');
+    inputTags.forEach(input=>{
+      let inputTexts = input.parentNode.querySelector("span");
+      if (input.checked) {
+        inputTexts.style.textDecoration = "line-through";
+      } else {
+        inputTexts.style.textDecoration = 'none';
+      }
+    });
   });
 }
 
-
+let doneTasks = document.querySelectorAll(".doneTask");
+if (doneTasks.length >= 2) {
+  clearAllTag.style.display = "block";
+  clearAllTag.style.opacity = "0";
+  
+  setTimeout(() => {
+    clearAllTag.style.opacity = "1";
+  }, 100);
+}
 
 function addNewList(newListValue){
-  let i = 1;
   let dateTime = new Date();
   let hours = dateTime.getHours() % 12;
   let minutes = dateTime.getMinutes();
@@ -59,6 +81,7 @@ function addNewList(newListValue){
     hour: hoursText,
     minute: minutesText,
     amPm: amPm,
+    isDone: false
   };
   let localList = [];
 
@@ -72,36 +95,65 @@ function addNewList(newListValue){
     localStorage.setItem("todos", JSON.stringify(localList));
   }
 
-  let checkInputs = document.querySelectorAll('.check-item input');
+  checkList();
+  showTotalTasks();
   
+}
 
-  
-  checkInputs.forEach(checkInput =>{
+function checkList(){
+  let checkInputs = document.querySelectorAll(".check-item input");
+  checkInputs.forEach((checkInput) => {
+    let checkText = checkInput.parentNode.querySelector("span");
     checkInput.addEventListener("change", () => {
-      let checkText = checkInput.parentNode.querySelector('span');
-      checkText.classList.toggle("delete-text");
 
-      if (checkText.classList.contains('delete-text')) {
-        checkInput.setAttribute('checked', 'true');
+      let localDatasWithJson = localStorage.getItem('todos');
+      let localDatas = JSON.parse(localDatasWithJson);
+      
+      let filteredText = localDatas.filter(el=>{
+        return el.text == checkText.textContent;
+      });
+      let isOpen = filteredText[0].isDone;
+      filteredText[0].isDone = isOpen == false ? true : false;
+      let updateIndex = localDatas.findIndex((el) => el == filteredText[0]);
+      localDatas[updateIndex] = filteredText[0];
+
+
+      localStorage.setItem("todos", JSON.stringify(localDatas));
+
+      // checkInput.parentNode.classList.add('doneTask');
+
+      if (checkInput.checked) {
+        checkText.style.textDecoration = "line-through";
+      } else {
+        checkText.style.textDecoration = 'none';
       }
 
-      let delTags = document.querySelectorAll(".delete-text");
-      console.log(delTags.length);
-      if (delTags.length >= 2) {
-        clearAllTag.style.display = "block";
-        setTimeout(() => {
-          clearAllTag.style.opacity = '1';
-        }, 100);
+      
+      if (checkInput.parentNode.classList.contains("doneTask")) {
+        checkInput.parentNode.classList.remove("doneTask");
+        completeTaskList();
       } else {
-        console.log('ab');
-        clearAllTag.style.display = 'none';
+        checkInput.parentNode.classList.add("doneTask");
+        completeTaskList();
       }
 
     });
-  })
+  });
+}
+checkList();
 
-  
-  
+function completeTaskList(){
+  let compelteTask = document.querySelectorAll(".doneTask");
+  if (compelteTask.length >= 2) {
+    clearAllTag.style.display = "block";
+    clearAllTag.style.opacity = "0";
+
+    setTimeout(() => {
+      clearAllTag.style.opacity = "1";
+    }, 100);
+  } else {
+    clearAllTag.style.display = 'none';
+  }
 }
 
 clearAllTag.addEventListener('click', ()=>{
@@ -110,6 +162,7 @@ clearAllTag.addEventListener('click', ()=>{
   setTimeout(() => {
     clearAllTag.style.display = 'none';
   }, 100);
+  showTotalTasks();
 });
 
 addBtn.addEventListener('click', ()=>{

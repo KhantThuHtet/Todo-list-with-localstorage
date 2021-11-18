@@ -8,19 +8,31 @@
 
 body {
   font-family: "Roboto", sans-serif;
+  background-color: #585ce1;
+}
+body::after{
+  content: "";
+  background-color: #fc7475;
+  height: 100vh;
+  clip-path: polygon(0 20%, 100% 77%, 100% 100%, 0 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -4;
 }
 
 .background {
   width: 100%;
   background-color: #585ce1;
-  height: 100%;
+  min-height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
   z-index: -5;
 }
 
-.background::after {
+/* .background::after {
   content: "";
   background-color: #fc7475;
   height: 100%;
@@ -29,7 +41,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-}
+} */
 
 .overlay{
   width: 100%;
@@ -319,14 +331,38 @@ body {
     width: 50vw;
   }
 }
+@media screen and (max-width: 1080px) {
+  .container {
+    width: 70vw;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .container {
+    margin-top: 100px;
+    width: 60vw;
+  }
+}
 
 @media screen and (max-width: 800px) {
   .container {
     width: 60vw;
   }
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 600px) {
   .container {
-    width: 70vw;
+    width: 85vw;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  .container {
+    width: 95vw;
+    margin-top: 100px;
+  }
+  .text-box{
+    width: 100%;
+    
   }
 }
